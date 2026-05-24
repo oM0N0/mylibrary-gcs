@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Categoria } from '../../../models/categoria';
 import { CategoriaService } from '../../../services/categoria';
 
 @Component({
   selector: 'app-categoria-form',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './categoria-form.html',
   styleUrl: './categoria-form.css'
 })
