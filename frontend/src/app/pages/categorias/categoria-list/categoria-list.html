@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Gerenciamento de Categorias</h1>
+
+  <app-categoria-form (categoriaSalva)="aoSalvarCategoria()"></app-categoria-form>
+
+  <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+
+  <h2>Categorias cadastradas</h2>
+
+  <table *ngIf="categorias.length > 0; else semCategorias">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let categoria of categorias">
+      <td>{{ categoria.id }}</td>
+      <td>{{ categoria.nome }}</td>
+      <td>{{ categoria.descricao }}</td>
+      <td>
+        <button class="btn-excluir" (click)="excluir(categoria.id)">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #semCategorias>
+    <p>Nenhuma categoria cadastrada.</p>
+  </ng-template>
+</div>
