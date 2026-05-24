@@ -1,0 +1,91 @@
+<div class="container">
+  <h1>Gerenciamento de Livros</h1>
+
+  <app-livro-form (livroSalvo)="aoSalvarLivro()"></app-livro-form>
+
+  <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+
+  <h2>Filtros</h2>
+
+  <div class="filtros">
+    <div class="campo">
+      <label for="busca">Buscar por título ou autor</label>
+      <input
+        id="busca"
+        type="text"
+        [(ngModel)]="filtroBusca"
+        placeholder="Ex: Spring ou Pedro"
+      />
+    </div>
+
+    <div class="campo">
+      <label for="categoria">Categoria</label>
+      <select id="categoria" [(ngModel)]="filtroCategoria">
+        <option value="">Todas</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nome }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="status">Status</label>
+      <select id="status" [(ngModel)]="filtroStatus">
+        <option value="">Todos</option>
+        <option value="DISPONIVEL">Disponível</option>
+        <option value="EMPRESTADO">Emprestado</option>
+      </select>
+    </div>
+
+    <div class="botoes-filtro">
+      <button type="button" (click)="aplicarFiltros()">Aplicar</button>
+      <button type="button" class="btn-limpar" (click)="limparFiltros()">Limpar</button>
+    </div>
+  </div>
+
+  <h2>Livros cadastrados</h2>
+
+  <table *ngIf="livros.length > 0; else semLivros">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Autor</th>
+      <th>ISBN</th>
+      <th>Ano</th>
+      <th>Categoria</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let livro of livros">
+      <td>{{ livro.id }}</td>
+      <td>{{ livro.titulo }}</td>
+      <td>{{ livro.autor }}</td>
+      <td>{{ livro.isbn }}</td>
+      <td>{{ livro.ano }}</td>
+      <td>{{ livro.categoria.nome }}</td>
+      <td>
+          <span
+            class="status"
+            [class.disponivel]="livro.status === 'DISPONIVEL'"
+            [class.emprestado]="livro.status === 'EMPRESTADO'"
+          >
+            {{ livro.status }}
+          </span>
+      </td>
+      <td>
+        <button class="btn-excluir" (click)="excluir(livro.id)">
+          Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #semLivros>
+    <p>Nenhum livro cadastrado.</p>
+  </ng-template>
+</div>
