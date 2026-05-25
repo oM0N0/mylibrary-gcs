@@ -52,10 +52,10 @@ public class LivroService {
     }
 
     public void excluir(Long id) {
-        Livro livro = buscarPorId(id);
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado."));
 
-        if (livro.getStatus() == StatusLivro.EMPRESTADO) {
-            throw new RuntimeException("Não é possível excluir um livro emprestado.");
+        if (livro.getStatus() != StatusLivro.DISPONIVEL) {
+            throw new RuntimeException("Não é possível excluir livro que não esteja disponível.");
         }
 
         livroRepository.delete(livro);
