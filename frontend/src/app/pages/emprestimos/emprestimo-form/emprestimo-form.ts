@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Livro } from '../../../models/livro';
@@ -39,7 +39,8 @@ export class EmprestimoForm implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private emprestimoService: EmprestimoService
+    private emprestimoService: EmprestimoService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -50,9 +51,11 @@ export class EmprestimoForm implements OnInit {
     this.livroService.listar('', 'DISPONIVEL', '').subscribe({
       next: (dados) => {
         this.livrosDisponiveis = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagemErro = 'Erro ao carregar livros disponíveis.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -60,6 +63,7 @@ export class EmprestimoForm implements OnInit {
   emprestar(): void {
     if (!this.emprestimo.livro.id || !this.emprestimo.nomePessoa.trim() || !this.emprestimo.dataDevolucaoPrevista) {
       this.mensagemErro = 'Livro, nome da pessoa e data prevista são obrigatórios.';
+      this.cdr.detectChanges();
       return;
     }
 
@@ -86,9 +90,11 @@ export class EmprestimoForm implements OnInit {
         this.mensagemErro = '';
         this.carregarLivrosDisponiveis();
         this.emprestimoSalvo.emit();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagemErro = 'Erro ao registrar empréstimo. Verifique se o livro está disponível.';
+        this.cdr.detectChanges();
       }
     });
   }
