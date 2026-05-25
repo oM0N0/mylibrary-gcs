@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Emprestimo } from '../../../models/emprestimo';
 import { EmprestimoService } from '../../../services/emprestimo';
@@ -15,7 +15,10 @@ export class EmprestimoList implements OnInit {
   emprestimos: Emprestimo[] = [];
   mensagem = '';
 
-  constructor(private emprestimoService: EmprestimoService) {}
+  constructor(
+    private emprestimoService: EmprestimoService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.carregarEmprestimosAtivos();
@@ -25,9 +28,11 @@ export class EmprestimoList implements OnInit {
     this.emprestimoService.listarAtivos().subscribe({
       next: (dados) => {
         this.emprestimos = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao carregar empréstimos.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -47,9 +52,11 @@ export class EmprestimoList implements OnInit {
       next: () => {
         this.mensagem = 'Livro devolvido com sucesso.';
         this.carregarEmprestimosAtivos();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao devolver livro.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -57,6 +64,7 @@ export class EmprestimoList implements OnInit {
   aoSalvarEmprestimo(): void {
     this.mensagem = 'Empréstimo registrado com sucesso.';
     this.carregarEmprestimosAtivos();
+    this.cdr.detectChanges();
   }
 
   calcularDiasAtraso(dataPrevista: string): number {

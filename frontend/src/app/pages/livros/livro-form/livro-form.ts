@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Livro } from '../../../models/livro';
@@ -33,7 +33,8 @@ export class LivroForm implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -44,9 +45,11 @@ export class LivroForm implements OnInit {
     this.categoriaService.listar().subscribe({
       next: (dados) => {
         this.categorias = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagemErro = 'Erro ao carregar categorias.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -54,6 +57,7 @@ export class LivroForm implements OnInit {
   salvar(): void {
     if (!this.livro.titulo.trim() || !this.livro.autor.trim() || !this.livro.categoria.id) {
       this.mensagemErro = 'Título, autor e categoria são obrigatórios.';
+      this.cdr.detectChanges();
       return;
     }
 
@@ -73,9 +77,11 @@ export class LivroForm implements OnInit {
 
         this.mensagemErro = '';
         this.livroSalvo.emit();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagemErro = 'Erro ao salvar livro.';
+        this.cdr.detectChanges();
       }
     });
   }

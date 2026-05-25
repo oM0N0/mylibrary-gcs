@@ -1,0 +1,46 @@
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.mensagem {
+  background-color: #ffebee;
+  border: 1px solid #ef9a9a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 16px;
+  color: #c62828;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f5f5f5;
+}
+
+.atraso {
+  padding: 6px 10px;
+  border-radius: 12px;
+  background-color: #ffebee;
+  color: #c62828;
+  font-size: 12px;
+  font-weight: bold;
+}

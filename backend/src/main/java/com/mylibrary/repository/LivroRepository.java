@@ -18,4 +18,6 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     );
 
     boolean existsByCategoriaId(Long categoriaId);
+
+    long countByStatus(StatusLivro status);
 }

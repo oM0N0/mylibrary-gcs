@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Livro } from '../../../models/livro';
@@ -26,7 +26,8 @@ export class LivroList implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +39,11 @@ export class LivroList implements OnInit {
     this.categoriaService.listar().subscribe({
       next: (dados) => {
         this.categorias = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao carregar categorias.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -53,9 +56,11 @@ export class LivroList implements OnInit {
     ).subscribe({
       next: (dados) => {
         this.livros = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao carregar livros.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -69,6 +74,7 @@ export class LivroList implements OnInit {
     this.filtroStatus = '';
     this.filtroBusca = '';
     this.carregarLivros();
+    this.cdr.detectChanges();
   }
 
   excluir(id?: number): void {
@@ -86,9 +92,11 @@ export class LivroList implements OnInit {
       next: () => {
         this.mensagem = 'Livro excluído com sucesso.';
         this.carregarLivros();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao excluir livro. Verifique se ele está disponível.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -96,5 +104,6 @@ export class LivroList implements OnInit {
   aoSalvarLivro(): void {
     this.mensagem = 'Livro cadastrado com sucesso.';
     this.carregarLivros();
+    this.cdr.detectChanges();
   }
 }

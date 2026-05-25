@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Categoria } from '../../../models/categoria';
 import { CategoriaService } from '../../../services/categoria';
@@ -15,7 +15,10 @@ export class CategoriaList implements OnInit {
   categorias: Categoria[] = [];
   mensagem = '';
 
-  constructor(private categoriaService: CategoriaService) {}
+  constructor(
+    private categoriaService: CategoriaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.carregarCategorias();
@@ -25,9 +28,11 @@ export class CategoriaList implements OnInit {
     this.categoriaService.listar().subscribe({
       next: (dados) => {
         this.categorias = dados;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao carregar categorias.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -47,9 +52,11 @@ export class CategoriaList implements OnInit {
       next: () => {
         this.mensagem = 'Categoria excluída com sucesso.';
         this.carregarCategorias();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.mensagem = 'Erro ao excluir categoria.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -57,5 +64,6 @@ export class CategoriaList implements OnInit {
   aoSalvarCategoria(): void {
     this.mensagem = 'Categoria cadastrada com sucesso.';
     this.carregarCategorias();
+    this.cdr.detectChanges();
   }
 }
