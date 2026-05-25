@@ -1,0 +1,53 @@
+<form class="formulario" (ngSubmit)="emprestar()">
+  <h2>Novo Empréstimo</h2>
+
+  <div class="campo">
+    <label for="livro">Livro disponível</label>
+    <select
+      id="livro"
+      name="livro"
+      [(ngModel)]="emprestimo.livro.id"
+    >
+      <option [ngValue]="undefined">Selecione um livro</option>
+      <option *ngFor="let livro of livrosDisponiveis" [ngValue]="livro.id">
+        {{ livro.titulo }} - {{ livro.autor }}
+      </option>
+    </select>
+  </div>
+
+  <div class="campo">
+    <label for="nomePessoa">Nome da pessoa</label>
+    <input
+      id="nomePessoa"
+      name="nomePessoa"
+      type="text"
+      [(ngModel)]="emprestimo.nomePessoa"
+      placeholder="Ex: João Silva"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="telefone">Telefone</label>
+    <input
+      id="telefone"
+      name="telefone"
+      type="text"
+      [(ngModel)]="emprestimo.telefone"
+      placeholder="Ex: 62999999999"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="dataDevolucaoPrevista">Data de devolução prevista</label>
+    <input
+      id="dataDevolucaoPrevista"
+      name="dataDevolucaoPrevista"
+      type="date"
+      [(ngModel)]="emprestimo.dataDevolucaoPrevista"
+    />
+  </div>
+
+  <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p>
+
+  <button type="submit">Registrar Empréstimo</button>
+</form>
