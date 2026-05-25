@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>Gerenciamento de Empréstimos</h1>
+
+  <app-emprestimo-form (emprestimoSalvo)="aoSalvarEmprestimo()"></app-emprestimo-form>
+
+  <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+
+  <h2>Empréstimos ativos</h2>
+
+  <table *ngIf="emprestimos.length > 0; else semEmprestimos">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Livro</th>
+      <th>Pessoa</th>
+      <th>Telefone</th>
+      <th>Data Empréstimo</th>
+      <th>Previsão Devolução</th>
+      <th>Atraso</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let emprestimo of emprestimos">
+      <td>{{ emprestimo.id }}</td>
+      <td>{{ emprestimo.livro.titulo }}</td>
+      <td>{{ emprestimo.nomePessoa }}</td>
+      <td>{{ emprestimo.telefone }}</td>
+      <td>{{ emprestimo.dataEmprestimo }}</td>
+      <td>{{ emprestimo.dataDevolucaoPrevista }}</td>
+      <td>
+          <span
+            class="atraso"
+            [class.em-atraso]="estaAtrasado(emprestimo.dataDevolucaoPrevista)"
+          >
+            {{ calcularDiasAtraso(emprestimo.dataDevolucaoPrevista) }} dias
+          </span>
+      </td>
+      <td>
+        <button class="btn-devolver" (click)="devolver(emprestimo.id)">
+          Devolver
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #semEmprestimos>
+    <p>Nenhum empréstimo ativo.</p>
+  </ng-template>
+</div>

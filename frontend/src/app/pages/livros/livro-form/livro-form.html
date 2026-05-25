@@ -1,0 +1,64 @@
+<form class="formulario" (ngSubmit)="salvar()">
+  <h2>Novo Livro</h2>
+
+  <div class="campo">
+    <label for="titulo">Título</label>
+    <input
+      id="titulo"
+      name="titulo"
+      type="text"
+      [(ngModel)]="livro.titulo"
+      placeholder="Ex: Spring Boot na Prática"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="autor">Autor</label>
+    <input
+      id="autor"
+      name="autor"
+      type="text"
+      [(ngModel)]="livro.autor"
+      placeholder="Ex: Pedro Lucas"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="isbn">ISBN</label>
+    <input
+      id="isbn"
+      name="isbn"
+      type="text"
+      [(ngModel)]="livro.isbn"
+      placeholder="Ex: 123456"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="ano">Ano</label>
+    <input
+      id="ano"
+      name="ano"
+      type="number"
+      [(ngModel)]="livro.ano"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="categoria">Categoria</label>
+    <select
+      id="categoria"
+      name="categoria"
+      [(ngModel)]="livro.categoria.id"
+    >
+      <option [ngValue]="undefined">Selecione uma categoria</option>
+      <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">
+        {{ categoria.nome }}
+      </option>
+    </select>
+  </div>
+
+  <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p>
+
+  <button type="submit">Salvar Livro</button>
+</form>

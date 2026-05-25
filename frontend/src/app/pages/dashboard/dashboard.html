@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>Dashboard</h1>
+
+  <p class="mensagem" *ngIf="mensagem">{{ mensagem }}</p>
+
+  <div class="cards" *ngIf="resumo">
+    <div class="card">
+      <span class="numero">{{ resumo.totalLivros }}</span>
+      <span class="titulo">Total de livros</span>
+    </div>
+
+    <div class="card">
+      <span class="numero">{{ resumo.livrosDisponiveis }}</span>
+      <span class="titulo">Disponíveis</span>
+    </div>
+
+    <div class="card">
+      <span class="numero">{{ resumo.livrosEmprestados }}</span>
+      <span class="titulo">Emprestados</span>
+    </div>
+
+    <div class="card">
+      <span class="numero">{{ resumo.emprestimosAtivos }}</span>
+      <span class="titulo">Empréstimos ativos</span>
+    </div>
+  </div>
+
+  <h2>Últimos empréstimos</h2>
+
+  <table *ngIf="resumo && resumo.ultimosEmprestimos.length > 0; else semEmprestimos">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Livro</th>
+      <th>Pessoa</th>
+      <th>Data empréstimo</th>
+      <th>Previsão devolução</th>
+      <th>Devolvido em</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let emprestimo of resumo.ultimosEmprestimos">
+      <td>{{ emprestimo.id }}</td>
+      <td>{{ emprestimo.livro.titulo }}</td>
+      <td>{{ emprestimo.nomePessoa }}</td>
+      <td>{{ emprestimo.dataEmprestimo }}</td>
+      <td>{{ emprestimo.dataDevolucaoPrevista }}</td>
+      <td>{{ emprestimo.dataDevolucaoEfetiva || 'Pendente' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #semEmprestimos>
+    <p>Nenhum empréstimo registrado.</p>
+  </ng-template>
+</div>

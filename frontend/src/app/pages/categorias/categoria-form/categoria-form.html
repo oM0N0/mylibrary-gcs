@@ -1,0 +1,28 @@
+<form class="formulario" (ngSubmit)="salvar()">
+  <h2>Nova Categoria</h2>
+
+  <div class="campo">
+    <label for="nome">Nome</label>
+    <input
+      id="nome"
+      type="text"
+      name="nome"
+      [(ngModel)]="categoria.nome"
+      placeholder="Ex: Ficção"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="descricao">Descrição</label>
+    <textarea
+      id="descricao"
+      name="descricao"
+      [(ngModel)]="categoria.descricao"
+      placeholder="Ex: Livros de ficção e fantasia"
+    ></textarea>
+  </div>
+
+  <p class="erro" *ngIf="mensagemErro">{{ mensagemErro }}</p>
+
+  <button type="submit">Salvar Categoria</button>
+</form>
